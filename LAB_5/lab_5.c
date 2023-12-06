@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
-#define NLEN 3000
-#define GLEN 8
+#define NLEN 300
+#define GLEN 3
 
 int main() {
 	
@@ -55,7 +56,9 @@ int main() {
 		printf("%d", nn[i]);
 	printf(" - CRC\n");
 
-	for(int i = 0; i<NLEN; i++){
+	size_t crc;
+	crc = sizeof(&nn);
+	for(int i = 0; i<250+crc-1; i++){
         	int nnn[NLEN];
         	for(int i = 0; i<NLEN; i++) 
 			nnn[i] = nn[i];
@@ -65,13 +68,7 @@ int main() {
 			nnn[i] = 0;
         	else 
 			nnn[i] = 1;
-        
-        	// Искажение рандомных битов
-        	if (nnn[rand()%NLEN] == 1) 
-			nnn[rand()%NLEN] = 0;
-        	else 
-			nnn[rand()%NLEN] = 1;
-        
+  
         	// Вычисление XOR и остатка от деления
         	for(int j=0; j < NLEN-GLEN+1; j++){
             		if(nnn[j] == 1){
